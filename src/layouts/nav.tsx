@@ -10,7 +10,8 @@ import { useSession } from '../context/sessionContext';
 const navElements = [
   { name: 'Home', to: '/', current: true },
   { name: 'Calculator', to: '/calculator', current: false },
-  { name: 'Users results', to: '/users-results', current: false },
+  { name: 'My results', to: '/my-results', current: false },
+  { name: 'All users results', to: '/users-results', current: false },
 ];
 
 export const Nav = () => {

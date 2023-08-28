@@ -6,6 +6,7 @@ interface localUser {
   img: string;
   session: boolean;
   signIn: boolean;
+  email: string;
 }
 
 const sessionContext = React.createContext({
@@ -13,6 +14,7 @@ const sessionContext = React.createContext({
   img: '',
   setLocalUser: (user: localUser) => {},
   session: false,
+  email: '',
 });
 
 export const SessionProvider = ({
@@ -24,6 +26,7 @@ export const SessionProvider = ({
     name: '',
     img: '',
     session: false,
+    email: '',
   });
 
   useEffect(() => {
@@ -42,12 +45,14 @@ export const SessionProvider = ({
           name: user.displayName!,
           img: user.photoURL!,
           session: true,
+          email: user.email!,
         });
       } else {
         setLocalUser({
           name: '',
           img: '',
           session: false,
+          email: '',
         });
         localStorage.removeItem('accessToken');
       }
@@ -61,6 +66,7 @@ export const SessionProvider = ({
         img: localUser.img,
         setLocalUser,
         session: localUser.session,
+        email: localUser.email,
       }}
     >
       {children}

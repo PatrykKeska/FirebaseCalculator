@@ -36,7 +36,7 @@ export const HomePage = () => {
               {!session && (
                 <NavLink
                   to={'/login'}
-                  className='block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto'
+                  className='block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition-all hover:scale-95 hover:text-white focus:outline-none focus:ring active:text-opacity-75 dark:hover:bg-slate-100 sm:w-auto'
                 >
                   Signin with Google
                 </NavLink>

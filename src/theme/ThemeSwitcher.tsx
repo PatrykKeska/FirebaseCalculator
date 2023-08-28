@@ -21,7 +21,7 @@ export default function Switcher({ mobile }: SwitcherProps) {
     <>
       <DarkModeSwitch
         style={{
-          marginLeft: `${mobile ? '3rem' : '2rem'}`,
+          marginLeft: `${mobile ? '1rem' : '2rem'}`,
           marginTop: '.25rem',
         }}
         checked={darkSide}

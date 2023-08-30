@@ -1,4 +1,11 @@
-import { query, collection, where, getDocs } from 'firebase/firestore';
+import {
+  query,
+  collection,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
 import { CalculationSchema } from '../types/dbSchema';
@@ -16,22 +23,30 @@ export const useGetUserRecord = () => {
     );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      results.push(doc.data() as CalculationSchema);
+      const docObject = {
+        ...doc.data(),
+        id: doc.id,
+      };
+
+      results.push(docObject as CalculationSchema);
     });
     return results;
   };
 
-  console.log(results);
+  const fetchResults = async () => {
+    if (!email) return;
+
+    const results = await getResults(email);
+    setResults(results.reverse());
+  };
 
   useEffect(() => {
-    if (!email) return;
-    (async () => {
-      const results = await getResults(email);
-      setResults(results.reverse());
-    })();
+    fetchResults();
+  }, [email, results]);
 
-    return () => setResults([]);
-  }, []);
+  const handleDelete = async (recordId: string) => {
+    await deleteDoc(doc(db, 'calculations', recordId));
+  };
 
-  return { results };
+  return { results, handleDelete };
 };

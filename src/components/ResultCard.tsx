@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CalculationSchema } from '../types/dbSchema';
+import { useGetUserRecord } from '../hooks/useGetUserRecord';
 
 export const ResultCard = ({
   createdAt,
@@ -12,9 +13,16 @@ export const ResultCard = ({
   id,
 }: CalculationSchema) => {
   const [isClicked, setIsClicked] = useState(false);
+  const { handleDelete } = useGetUserRecord();
+
+  const handleRemoveItem = () => {
+    setIsClicked(false);
+    handleDelete(id);
+  };
+
   return (
     <>
-      <div className=' relative block overflow-hidden rounded-lg border border-gray-100 p-4 pb-6 shadow-xl transition-all ease-in-out hover:rotate-2 hover:scale-95  hover:cursor-pointer dark:bg-slate-900 sm:p-6 lg:p-8'>
+      <div className=' relative block overflow-hidden rounded-lg border border-gray-100 p-4 pb-6 shadow-xl transition-all ease-in-out hover:rotate-2 hover:scale-105  hover:cursor-pointer dark:bg-slate-900 sm:p-6 lg:p-8'>
         <span className='absolute  inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 dark:bg-gradient-to-r  dark:from-purple-500 dark:to-pink-600'></span>
 
         <div className='sm:flex sm:justify-between sm:gap-4'>
@@ -64,7 +72,7 @@ export const ResultCard = ({
             <div className='mt-2 flex flex-row items-center justify-center gap-5'>
               <button
                 className='rounded-lg bg-green-400 px-8 py-2 transition-all ease-in-out hover:scale-95 hover:cursor-pointer dark:bg-green-500'
-                onClick={() => setIsClicked(false)}
+                onClick={handleRemoveItem}
               >
                 Yes
               </button>

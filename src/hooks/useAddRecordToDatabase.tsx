@@ -4,7 +4,6 @@ import { LogsInterface } from './useCalculate';
 import { db } from '../lib/firebase';
 import { useSession } from '../context/sessionContext';
 import { useEffect, useState } from 'react';
-import firebase from 'firebase/compat/app';
 import { getTimeStamp } from '../utils/getTimeStamp';
 
 export const useAddRecordToDatabse = (
@@ -48,7 +47,6 @@ export const useAddRecordToDatabse = (
         result,
         email,
         createdAt: getTimeStamp(),
-        id: uuid(),
         img,
         name,
       });

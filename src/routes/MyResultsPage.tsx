@@ -6,7 +6,7 @@ const MyResultsPage = () => {
 
   return (
     <section className='flex flex-row flex-wrap items-center justify-center gap-5 py-10'>
-      {results.map((result) => (
+      {results.map((result: any) => (
         <ResultCard key={result.id} {...result} />
       ))}
     </section>

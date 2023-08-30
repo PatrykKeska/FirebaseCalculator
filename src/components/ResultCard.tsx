@@ -2,16 +2,24 @@ import { useState } from 'react';
 import { CalculationSchema } from '../types/dbSchema';
 import { useGetUserRecord } from '../hooks/useGetUserRecord';
 
+interface userCalcProps {
+  cardDetails: CalculationSchema;
+  noDelete?: boolean;
+}
+
 export const ResultCard = ({
-  createdAt,
-  firstParamether,
-  img,
-  name,
-  operator,
-  result,
-  secondParamether,
-  id,
-}: CalculationSchema) => {
+  cardDetails: {
+    id,
+    name,
+    img,
+    firstParamether,
+    operator,
+    secondParamether,
+    result,
+    createdAt,
+  },
+  noDelete,
+}: userCalcProps) => {
   const [isClicked, setIsClicked] = useState(false);
   const { handleDelete } = useGetUserRecord();
 
@@ -57,12 +65,14 @@ export const ResultCard = ({
               {createdAt}
             </dd>
           </div>
-          <button
-            className=' rounded-md bg-red-300 px-5 py-2 dark:bg-red-500'
-            onClick={() => setIsClicked(true)}
-          >
-            Remove Record
-          </button>
+          {!noDelete && (
+            <button
+              className=' rounded-md bg-red-300 px-5 py-2 dark:bg-red-500'
+              onClick={() => setIsClicked(true)}
+            >
+              Remove Record
+            </button>
+          )}
         </dl>
         {isClicked && (
           <div className='absolute inset-0 flex w-full flex-col items-center justify-center bg-sky-200 p-5 dark:bg-slate-900 '>

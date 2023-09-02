@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.firebase/hosting.ZGlzdA.cache
+.firebaserc
+.gitignore
+.github/workflows/firebase-hosting-merge.yml
+.github/workflows/firebase-hosting-pull-request.yml
+firebase.json
+.env
+src/lib/firebase.ts
+src/lib/firebase.ts
+src/lib/firebase.ts

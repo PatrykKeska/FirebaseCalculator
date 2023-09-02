@@ -7,7 +7,7 @@ export const googleSignout = () => {
       console.log('Signout Succesfull');
     })
     .catch((error) => {
-      console.log('Signout Failed');
+      throw new Error(error);
     });
   localStorage.removeItem('accessToken');
 };

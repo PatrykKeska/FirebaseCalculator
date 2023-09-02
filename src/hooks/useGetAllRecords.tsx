@@ -6,22 +6,31 @@ import { useSession } from '../context/sessionContext';
 
 export const useGetAllRecords = () => {
   const [results, setResults] = useState<CalculationSchema[]>([]);
+  const [loading, setLoading] = useState(false);
   const { email } = useSession();
   const { session } = useSession();
   const getResults = async () => {
-    if (email === '' || !session) return;
-    const results: CalculationSchema[] = [];
-    const q = query(collection(db, 'calculations'));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      const docObject = {
-        ...doc.data(),
-        id: doc.id,
-      };
+    setLoading(true);
+    try {
+      if (email === '' || !session) return;
+      const results: CalculationSchema[] = [];
+      const q = query(collection(db, 'calculations'));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const docObject = {
+          ...doc.data(),
+          id: doc.id,
+        };
 
-      results.push(docObject as CalculationSchema);
-    });
-    return results;
+        results.push(docObject as CalculationSchema);
+      });
+      return results;
+    } catch (error) {
+      setLoading(false);
+      throw new Error();
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchResults = async () => {
@@ -34,7 +43,7 @@ export const useGetAllRecords = () => {
 
   useEffect(() => {
     fetchResults();
-  }, [email]);
+  }, []);
 
-  return { results };
+  return { results, loading };
 };

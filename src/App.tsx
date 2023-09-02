@@ -6,7 +6,7 @@ import { UsersResoultsPage } from './routes/UsersResultsPage';
 import { HomePage } from './routes/HomePage';
 import { useAuth } from './hooks/useAuth';
 import MyResultsPage from './routes/MyResultsPage';
-
+import CalculationDetailsPage from './routes/CalculationDetails';
 const AuthProvider = () => {
   useAuth();
 
@@ -17,6 +17,7 @@ const AuthProvider = () => {
       <Route path='/calculator' element={<CalculatorPage />} />
       <Route path='/users-results' element={<UsersResoultsPage />} />
       <Route path='/my-results' element={<MyResultsPage />} />
+      <Route path='/my-results/:id' element={<CalculationDetailsPage />} />
     </Routes>
   );
 };

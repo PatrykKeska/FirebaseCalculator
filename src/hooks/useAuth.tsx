@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSession } from '../context/sessionContext';
 
@@ -10,11 +10,12 @@ export const useAuth = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const currPage = localStorage.getItem('currPage');
-    if (currPage) {
-      setCurrLocation(JSON.parse(currPage));
+    const visitedPageToken = localStorage.getItem('visitedPageToken');
+
+    if (visitedPageToken) {
+      setCurrLocation(JSON.parse(visitedPageToken));
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (!session && window.location.pathname !== '/login') {
@@ -26,8 +27,11 @@ export const useAuth = () => {
           setLoaded(false);
           navigate(currLocation);
         }
-        localStorage.setItem('currPage', JSON.stringify(location.pathname));
+        localStorage.setItem(
+          'visitedPageToken',
+          JSON.stringify(location.pathname)
+        );
       }
     }
-  }, [session, navigate, location.pathname, currLocation]);
+  }, []);
 };

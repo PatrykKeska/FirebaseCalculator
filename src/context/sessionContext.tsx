@@ -12,7 +12,7 @@ interface localUser {
 const sessionContext = React.createContext({
   name: '',
   img: '',
-  setLocalUser: (user: localUser) => {},
+  setLocalUser: ({}: localUser): void => {},
   session: false,
   email: '',
 });

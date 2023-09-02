@@ -9,7 +9,7 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (session) {
-      navigate('/calculator');
+      navigate('/');
     }
   }, [session]);
   return (

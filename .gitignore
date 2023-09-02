@@ -32,3 +32,4 @@ firebase.json
 src/lib/firebase.ts
 src/lib/firebase.ts
 src/lib/firebase.ts
+.env

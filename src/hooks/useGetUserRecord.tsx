@@ -13,24 +13,33 @@ import { useSession } from '../context/sessionContext';
 
 export const useGetUserRecord = () => {
   const [results, setResults] = useState<CalculationSchema[]>([]);
+  const [loading, setLoading] = useState(false);
   const { email } = useSession();
 
   const getResults = async (email: string) => {
-    const results: CalculationSchema[] = [];
-    const q = query(
-      collection(db, 'calculations'),
-      where('email', '==', email)
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      const docObject = {
-        ...doc.data(),
-        id: doc.id,
-      };
+    setLoading(true);
+    try {
+      const results: CalculationSchema[] = [];
+      const q = query(
+        collection(db, 'calculations'),
+        where('email', '==', email)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const docObject = {
+          ...doc.data(),
+          id: doc.id,
+        };
 
-      results.push(docObject as CalculationSchema);
-    });
-    return results;
+        results.push(docObject as CalculationSchema);
+      });
+      return results;
+    } catch (error) {
+      setLoading(false);
+      throw new Error();
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchResults = async () => {
@@ -42,11 +51,11 @@ export const useGetUserRecord = () => {
 
   useEffect(() => {
     fetchResults();
-  }, [email, results]);
+  }, []);
 
   const handleDelete = async (recordId: string) => {
     await deleteDoc(doc(db, 'calculations', recordId));
   };
 
-  return { results, handleDelete };
+  return { results, handleDelete, loading };
 };

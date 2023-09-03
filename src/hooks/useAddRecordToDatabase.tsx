@@ -2,9 +2,9 @@ import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 import { LogsInterface } from './useCalculate';
 import { db } from '../lib/firebase';
-import { useSession } from '../context/sessionContext';
 import { useEffect, useState } from 'react';
 import { getTimeStamp } from '../utils/getTimeStamp';
+import { useUser } from '@clerk/clerk-react';
 
 export const useAddRecordToDatabse = (
   logs: LogsInterface,
@@ -13,7 +13,12 @@ export const useAddRecordToDatabse = (
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const { email, img, name } = useSession();
+  const { user } = useUser();
+
+  if (user === null || user === undefined) {
+    return { addRecord: () => null, isLoading, isError, isSuccess };
+  }
+  const { id, fullName, imageUrl } = user;
 
   useEffect(() => {
     if (isSuccess) {
@@ -39,16 +44,16 @@ export const useAddRecordToDatabse = (
       return;
     }
     try {
-      if (!email) return;
+      if (!id) return;
       await setDoc(doc(db, 'calculations', uuid()), {
         firstParamether,
         operator,
         secondParamether,
         result,
-        email,
+        userId: id,
         createdAt: getTimeStamp(),
-        img,
-        name,
+        imageUrl,
+        fullName,
       });
     } catch (error) {
       setIsError(true);

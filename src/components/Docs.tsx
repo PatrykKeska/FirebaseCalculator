@@ -1,7 +1,7 @@
 export const Docs = () => {
   return (
     <>
-      <section className='mx-auto max-w-4xl bg-gray-100 px-8 text-slate-800  dark:bg-slate-800 dark:text-white lg:flex lg:items-center'>
+      <section className='mx-auto max-w-4xl bg-gray-100 px-8 pb-10 text-slate-800  dark:bg-slate-800 dark:text-white lg:flex lg:items-center'>
         <div className='container mx-auto my-10 flex flex-col items-center gap-5'>
           <h1 className='mb-4 text-2xl font-bold'>Docs</h1>
           <div>

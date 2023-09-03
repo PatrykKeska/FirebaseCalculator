@@ -1,10 +1,10 @@
 export type CalculationSchema = {
   createdAt: string;
-  email: string;
+  userId: string;
   firstParamether: number;
   id: string;
-  img: string;
-  name: string;
+  imageUrl: string;
+  fullName: string;
   operator: string;
   result: number;
   secondParamether: number;

@@ -9,20 +9,29 @@ import {
 import { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
 import { CalculationSchema } from '../types/dbSchema';
-import { useSession } from '../context/sessionContext';
+import { useUser } from '@clerk/clerk-react';
 
-export const useGetUserRecord = () => {
+type GetUserRecordResult = {
+  results: CalculationSchema[] | undefined;
+  handleDelete: (recordId: string) => Promise<void> | undefined;
+  loading: boolean;
+};
+
+export const useGetUserRecord = (): GetUserRecordResult => {
   const [results, setResults] = useState<CalculationSchema[]>([]);
   const [loading, setLoading] = useState(false);
-  const { email } = useSession();
+  const { user } = useUser();
 
-  const getResults = async (email: string) => {
+  if (user === null || user === undefined) return {} as GetUserRecordResult;
+  const { id: userId } = user;
+
+  const getResults = async (userId: string) => {
     setLoading(true);
     try {
       const results: CalculationSchema[] = [];
       const q = query(
         collection(db, 'calculations'),
-        where('email', '==', email)
+        where('userId', '==', userId)
       );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -43,9 +52,9 @@ export const useGetUserRecord = () => {
   };
 
   const fetchResults = async () => {
-    if (!email) return;
+    if (!userId) return;
 
-    const results = await getResults(email);
+    const results = await getResults(userId);
     setResults(results.reverse());
   };
 
@@ -56,6 +65,8 @@ export const useGetUserRecord = () => {
   const handleDelete = async (recordId: string) => {
     await deleteDoc(doc(db, 'calculations', recordId));
   };
+
+  if (user === null || user === undefined) return {} as GetUserRecordResult;
 
   return { results, handleDelete, loading };
 };

@@ -9,8 +9,8 @@ interface userCalcProps {
 export const ResultCard = ({
   cardDetails: {
     id,
-    name,
-    img,
+    fullName,
+    imageUrl,
     firstParamether,
     operator,
     secondParamether,
@@ -30,14 +30,14 @@ export const ResultCard = ({
           </h3>
 
           <p className='mt-1 text-xs font-medium text-gray-600 dark:text-slate-100'>
-            By {name}
+            By {fullName}
           </p>
         </div>
 
         <div className=' sm:block sm:shrink-0'>
           <img
-            alt={name}
-            src={img}
+            alt={fullName}
+            src={imageUrl}
             className='my-2 h-10 w-10 rounded-lg object-cover shadow-sm sm:h-16 sm:w-16'
           />
         </div>
